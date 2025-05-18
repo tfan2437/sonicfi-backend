@@ -44,14 +44,22 @@ app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
 
 // error handler
-app.use((err, req, res) => {
-  res.status(500).json({
-    message:
-      process.env.NODE_ENV === "production"
-        ? "Internal server error"
-        : err.message,
-  });
-});
+app.use(
+  (
+    err,
+    req,
+    res,
+    // eslint-disable-next-line no-unused-vars
+    next
+  ) => {
+    res.status(500).json({
+      message:
+        process.env.NODE_ENV === "production"
+          ? "Internal server error"
+          : err.message,
+    });
+  }
+);
 
 // port running
 app.listen(PORT, () => {
