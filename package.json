@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
-    "seed:songs": "node src/seeds/songs.js",
-    "seed:albums": "node src/seeds/albums.js"
+    "seed:albums": "node src/seeds/albums.js",
+    "seed:tracks": "node src/seeds/tracks.js",
+    "seed:artists": "node src/seeds/artists.js"
   },
   "dependencies": {
     "@clerk/express": "^1.4.10",

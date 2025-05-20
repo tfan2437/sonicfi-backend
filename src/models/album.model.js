@@ -2,30 +2,95 @@ import mongoose from "mongoose";
 
 const albumSchema = new mongoose.Schema(
   {
-    title: {
+    _id: {
       type: String,
       required: true,
     },
-    artist: {
+    type: {
       type: String,
       required: true,
     },
-    imageUrl: {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    artists: {
+      type: [
+        {
+          id: {
+            type: String,
+            required: true,
+          },
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+        },
+      ],
+      required: true,
+      validate: [
+        {
+          validator: function (artists) {
+            return artists && artists.length > 0;
+          },
+          message: "Album must have at least one artist",
+        },
+      ],
+    },
+    image: {
+      url: {
+        type: String,
+        required: true,
+      },
+      height: {
+        type: Number,
+        required: true,
+      },
+      width: {
+        type: Number,
+        required: true,
+      },
+    },
+    color: {
       type: String,
       required: true,
     },
-    releaseYear: {
+    release_date: {
+      type: String,
+      required: true,
+    },
+    track_ids: {
+      type: [String],
+      default: [],
+      required: true,
+    },
+    total_tracks: {
       type: Number,
       required: true,
+      min: 1,
     },
-    songs: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Song",
-      },
-    ],
+    popularity: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    label: {
+      type: String,
+      required: true,
+    },
+    copyrights: {
+      type: String,
+      required: true,
+    },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
+
+// Index for common queries
+albumSchema.index({ "artists.id": 1 });
+albumSchema.index({ popularity: -1 });
+albumSchema.index({ release_date: -1 });
 
 export const Album = mongoose.model("Album", albumSchema);
