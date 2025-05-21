@@ -100,6 +100,11 @@ const artistSchema = new mongoose.Schema(
       ],
       required: true,
     },
+    albums: {
+      type: [String],
+      default: [],
+      required: true,
+    },
     external_links: {
       type: [
         {

@@ -80,7 +80,7 @@ const albumSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    copyrights: {
+    copyright: {
       type: String,
       required: true,
     },

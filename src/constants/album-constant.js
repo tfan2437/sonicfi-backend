@@ -33,7 +33,7 @@ export const ALBUMS = [
     total_tracks: 12,
     popularity: 91,
     label: "pgLang, under exclusive license to Interscope Records",
-    copyrights: "© 2024 pgLang, under exclusive license to Interscope Records",
+    copyright: "© 2024 pgLang, under exclusive license to Interscope Records",
   },
   {
     _id: "5JjnoGJyOxfSZUZtk2rRwZ",
@@ -56,7 +56,7 @@ export const ALBUMS = [
     total_tracks: 1,
     popularity: 83,
     label: "Kendrick Lamar, under exclusive license to Interscope Records",
-    copyrights:
+    copyright:
       "© 2024 Kendrick Lamar, under exclusive license to Interscope Records",
   },
   {
@@ -100,7 +100,7 @@ export const ALBUMS = [
     total_tracks: 19,
     popularity: 82,
     label: "pgLang/Top Dawg Entertainment/Aftermath/Interscope Records",
-    copyrights: "© 2022 Aftermath/Interscope Records",
+    copyright: "© 2022 Aftermath/Interscope Records",
   },
   {
     _id: "3pLdWdkj83EYfDN6H2N8MR",
@@ -142,7 +142,7 @@ export const ALBUMS = [
     total_tracks: 14,
     popularity: 84,
     label: "Black Panther (TDE/DMG) PS",
-    copyrights: "© 2018 Aftermath Records",
+    copyright: "© 2018 Aftermath Records",
   },
   {
     _id: "4eLPsYPBmXABThSJ821sqY",
@@ -180,7 +180,7 @@ export const ALBUMS = [
     total_tracks: 14,
     popularity: 87,
     label: "Aftermath",
-    copyrights: "© 2017 Aftermath/Interscope (Top Dawg Entertainment)",
+    copyright: "© 2017 Aftermath/Interscope (Top Dawg Entertainment)",
   },
   {
     _id: "7ycBtnsMtyVbbwTfJwRjSP",
@@ -220,7 +220,7 @@ export const ALBUMS = [
     total_tracks: 16,
     popularity: 79,
     label: "Aftermath",
-    copyrights: "© 2015 Aftermath/Interscope (Top Dawg Entertainment)",
+    copyright: "© 2015 Aftermath/Interscope (Top Dawg Entertainment)",
   },
   {
     _id: "6PBZN8cbwkqm1ERj2BGXJ1",
@@ -257,7 +257,7 @@ export const ALBUMS = [
     total_tracks: 13,
     popularity: 76,
     label: "Aftermath",
-    copyrights: "© 2013 Aftermath/Interscope Records",
+    copyright: "© 2013 Aftermath/Interscope Records",
   },
   {
     _id: "1bkN9nIkkCnXeG4yitVS1J",
@@ -296,7 +296,7 @@ export const ALBUMS = [
     total_tracks: 15,
     popularity: 73,
     label: "Top Dawg Entertainment / Section.80",
-    copyrights: "2011 Top Dawg Entertainment / Section.80",
+    copyright: "2011 Top Dawg Entertainment / Section.80",
   },
   {
     _id: "7MoLQ8vckhwBbQqEYQTYQC",
@@ -332,6 +332,6 @@ export const ALBUMS = [
     total_tracks: 12,
     popularity: 62,
     label: "Top Dawg Entertainment / Kendrick Lamar",
-    copyrights: "2010 Top Dawg Entertainment / Kendrick Lamar",
+    copyright: "2010 Top Dawg Entertainment / Kendrick Lamar",
   },
 ];
