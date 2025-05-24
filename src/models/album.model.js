@@ -18,9 +18,10 @@ const albumSchema = new mongoose.Schema(
     artists: {
       type: [
         {
-          id: {
+          _id: {
             type: String,
             required: true,
+            ref: "Artist",
           },
           name: {
             type: String,
@@ -89,7 +90,7 @@ const albumSchema = new mongoose.Schema(
 );
 
 // Index for common queries
-albumSchema.index({ "artists.id": 1 });
+albumSchema.index({ "artists._id": 1 });
 albumSchema.index({ popularity: -1 });
 albumSchema.index({ release_date: -1 });
 

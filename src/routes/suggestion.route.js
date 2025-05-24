@@ -1,16 +1,14 @@
 import { Router } from "express";
 import {
   getNewReleases,
-  getTopAndMoreLikeArtists,
-  getDiscoverAndPopularAlbums,
-  getDiscoverAndPopularTraks,
+  getTopArtistsAndMoreBy,
+  getDiscoverAndPopular,
 } from "../controller/suggestion.controller.js";
 
 const router = Router();
 
 router.get("/new-releases", getNewReleases);
-router.get("/top-and-more-like-artists", getTopAndMoreLikeArtists);
-router.get("/discover-and-popular-albums", getDiscoverAndPopularAlbums);
-router.get("/discover-and-popular-tracks", getDiscoverAndPopularTraks);
+router.get("/top-artists-and-more-by", getTopArtistsAndMoreBy);
+router.get("/discover-and-popular", getDiscoverAndPopular);
 
 export default router;

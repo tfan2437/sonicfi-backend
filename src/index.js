@@ -8,11 +8,10 @@ import { PORT } from "../config/env.js";
 import { connectDB } from "./lib/db.js";
 
 import userRoute from "./routes/user.route.js";
-import adminRoutes from "./routes/admin.route.js";
+
 import authRoutes from "./routes/auth.route.js";
-import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
-import statRoutes from "./routes/stat.route.js";
+
 import trackRoutes from "./routes/track.route.js";
 import artistRoutes from "./routes/artist.route.js";
 import suggestionRoutes from "./routes/suggestion.route.js";
@@ -37,19 +36,15 @@ app.use(
     },
   })
 );
-app.use("/api/admin", adminRoutes);
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoutes);
-app.use("/api/songs", songRoutes);
-
-app.use("/api/stats", statRoutes);
 // refactor
 app.use("/api/tracks", trackRoutes);
-app.use("/api/artists", artistRoutes);
-app.use("/api/albums", albumRoutes);
+app.use("/api/artist", artistRoutes);
+app.use("/api/album", albumRoutes);
 // refactor
-app.use("/api/suggestions", suggestionRoutes);
+app.use("/api/suggestion", suggestionRoutes);
 
 app.get("/", (req, res) => {
   res.send("Sonicfi API");

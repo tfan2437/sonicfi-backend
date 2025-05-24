@@ -1,12 +1,41 @@
 import { Artist } from "../models/artist.model.js";
+import { Track } from "../models/track.model.js";
+import { Album } from "../models/album.model.js";
 
-export const getAllArtists = async (req, res, next) => {
+export const getArtistById = async (req, res) => {
   try {
-    const artists = await Artist.find();
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({
+        message: "Failed to fetch album",
+        error: "Artist ID is required",
+      });
+    }
 
-    res.status(200).json(artists);
+    const artist = await Artist.findById(id);
+    if (!artist) {
+      return res
+        .status(404)
+        .json({ message: "Failed to fetch artist", error: "Artist not found" });
+    }
+
+    const tracks = await Track.find({ _id: { $in: artist.top_tracks } }).sort({
+      playcount: -1,
+    });
+
+    const albums = await Album.find({ _id: { $in: artist.albums } }).sort({
+      release_date: -1,
+    });
+
+    res.status(200).json({
+      message: "Artist fetched successfully",
+      artist,
+      albums,
+      tracks,
+    });
   } catch (error) {
-    console.log("Error in getAllArtists", error);
-    next(error);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch artist", error: error.message });
   }
 };

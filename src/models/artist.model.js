@@ -101,7 +101,22 @@ const artistSchema = new mongoose.Schema(
       required: true,
     },
     albums: {
-      type: [String],
+      type: [
+        {
+          type: String,
+          ref: "Album",
+        },
+      ],
+      default: [],
+      required: true,
+    },
+    top_tracks: {
+      type: [
+        {
+          type: String,
+          ref: "Track",
+        },
+      ],
       default: [],
       required: true,
     },
@@ -141,5 +156,7 @@ artistSchema.index({ world_rank: 1 });
 artistSchema.index({ genres: 1 });
 artistSchema.index({ followers: -1 });
 artistSchema.index({ monthly_listeners: -1 });
+artistSchema.index({ albums: 1 });
+artistSchema.index({ top_tracks: 1 });
 
 export const Artist = mongoose.model("Artist", artistSchema);

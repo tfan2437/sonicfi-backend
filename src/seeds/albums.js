@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Album } from "../models/album.model.js";
 import { config } from "dotenv";
-import { ALBUMS } from "../constants/album-constant.js";
+import { albumsData } from "../constants/albums-data.js";
 
 config();
 
@@ -9,11 +9,8 @@ const seedAlbums = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
 
-    // Clear existing songs
-    await Album.deleteMany({});
-
     // Insert new songs
-    await Album.insertMany(ALBUMS);
+    await Album.insertMany(albumsData);
 
     console.log("Albums seeded successfully!");
   } catch (error) {

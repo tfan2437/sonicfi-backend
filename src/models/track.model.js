@@ -39,6 +39,10 @@ const trackSchema = new mongoose.Schema(
       required: true,
       ref: "Album",
     },
+    release_date: {
+      type: String,
+      required: true,
+    },
     track_number: {
       type: Number,
       required: true,
@@ -52,9 +56,10 @@ const trackSchema = new mongoose.Schema(
     artists: {
       type: [
         {
-          id: {
+          _id: {
             type: String,
             required: true,
+            ref: "Artist",
           },
           name: {
             type: String,
@@ -85,7 +90,9 @@ const trackSchema = new mongoose.Schema(
 
 // Index for common queries
 trackSchema.index({ album_id: 1 });
-trackSchema.index({ "artists.id": 1 });
+trackSchema.index({ "artists._id": 1 });
+trackSchema.index({ release_date: -1 });
 trackSchema.index({ playcount: -1 });
+trackSchema.index({ name: "text", "artists.name": "text" });
 
 export const Track = mongoose.model("Track", trackSchema);
