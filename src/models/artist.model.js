@@ -150,13 +150,35 @@ const artistSchema = new mongoose.Schema(
   { timestamps: true, versionKey: false }
 );
 
-// Index for common queries
-artistSchema.index({ name: 1 });
+// ===== Indexing Strategy =====
+// 1. Primary index for ranking queries
+// - Used in getTopArtistsAndMoreBy() for finding top artists
+// - Supports queries like: Artist.find().sort({ world_rank: 1 })
 artistSchema.index({ world_rank: 1 });
-artistSchema.index({ genres: 1 });
+
+// 2. Index for follower-based queries
+// - Used for sorting artists by popularity/following
+// - Supports queries like: Artist.find().sort({ followers: -1 })
 artistSchema.index({ followers: -1 });
+
+// 3. Index for monthly listener queries
+// - Used for finding trending artists
+// - Supports queries like: Artist.find().sort({ monthly_listeners: -1 })
 artistSchema.index({ monthly_listeners: -1 });
-artistSchema.index({ albums: 1 });
-artistSchema.index({ top_tracks: 1 });
+
+// 4. Compound index for genre-based queries with popularity
+// - Optimizes finding popular artists within specific genres
+// - Supports queries like: Artist.find({ genres: genre }).sort({ monthly_listeners: -1 })
+artistSchema.index({ genres: 1, monthly_listeners: -1 });
+
+// 5. Text index for search functionality
+// - Enables full-text search across artist names and biography
+// - Supports queries like: Artist.find({ $text: { $search: "search term" } })
+artistSchema.index({ name: "text", biography: "text" });
+
+// Note: We removed the following indexes as they're not actively used in queries:
+// - albums: 1 (references are queried from Album model instead)
+// - top_tracks: 1 (references are queried from Track model instead)
+// - name: 1 (covered by text index for searches and not used for sorting)
 
 export const Artist = mongoose.model("Artist", artistSchema);

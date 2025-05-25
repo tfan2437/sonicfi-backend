@@ -28,6 +28,26 @@ const albumSchema = new mongoose.Schema(
             required: true,
             trim: true,
           },
+          profile_image: {
+            url: {
+              type: String,
+              required: true,
+              validate: {
+                validator: function (v) {
+                  return /^https?:\/\/.+/i.test(v);
+                },
+                message: (props) => `${props.value} is not a valid URL!`,
+              },
+            },
+            height: {
+              type: Number,
+              required: true,
+            },
+            width: {
+              type: Number,
+              required: true,
+            },
+          },
         },
       ],
       required: true,
@@ -66,6 +86,7 @@ const albumSchema = new mongoose.Schema(
       type: [String],
       default: [],
       required: true,
+      ref: "Track",
     },
     total_tracks: {
       type: Number,
@@ -89,9 +110,25 @@ const albumSchema = new mongoose.Schema(
   { timestamps: true, versionKey: false }
 );
 
-// Index for common queries
-albumSchema.index({ "artists._id": 1 });
+// ===== Indexing Strategy =====
+// 1. Compound index for efficiently querying albums by artist and sorting by release date
+// - Used in getArtistAlbums() and when fetching artist's albums
+// - Supports queries like: Album.find({ "artists._id": artistId }).sort({ release_date: -1 })
+albumSchema.index({ "artists._id": 1, release_date: -1 });
+
+// 2. Index for popularity-based queries
+// - Used in getDiscoverAndPopular() for finding trending/popular albums
+// - Supports queries like: Album.find().sort({ popularity: -1 })
 albumSchema.index({ popularity: -1 });
+
+// 3. Index for release date sorting
+// - Used in getNewReleases() for finding latest albums
+// - Supports queries like: Album.find().sort({ release_date: -1 })
 albumSchema.index({ release_date: -1 });
+
+// 4. Text index for search functionality
+// - Enables full-text search across album and artist names
+// - Supports queries like: Album.find({ $text: { $search: "search term" } })
+albumSchema.index({ name: "text", "artists.name": "text" });
 
 export const Album = mongoose.model("Album", albumSchema);
