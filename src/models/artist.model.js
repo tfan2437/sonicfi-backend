@@ -103,8 +103,39 @@ const artistSchema = new mongoose.Schema(
     albums: {
       type: [
         {
-          type: String,
-          ref: "Album",
+          _id: {
+            type: String,
+            required: true,
+            ref: "Album",
+          },
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+          type: {
+            type: String,
+            default: "album",
+            required: true,
+          },
+          image: {
+            url: {
+              type: String,
+              required: true,
+            },
+            height: {
+              type: Number,
+              required: true,
+            },
+            width: {
+              type: Number,
+              required: true,
+            },
+          },
+          release_date: {
+            type: String,
+            required: true,
+          },
         },
       ],
       default: [],
@@ -113,8 +144,74 @@ const artistSchema = new mongoose.Schema(
     top_tracks: {
       type: [
         {
-          type: String,
-          ref: "Track",
+          _id: {
+            type: String,
+            required: true,
+            ref: "Track",
+          },
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+          preview_url: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+          duration: {
+            type: Number,
+            required: true,
+          },
+          playcount: {
+            type: Number,
+            required: true,
+          },
+          artists: {
+            type: [
+              {
+                _id: {
+                  type: String,
+                  required: true,
+                  ref: "Artist",
+                },
+                name: {
+                  type: String,
+                  required: true,
+                  trim: true,
+                },
+                profile_image: {
+                  url: {
+                    type: String,
+                    required: true,
+                    validate: {
+                      validator: function (v) {
+                        return /^https?:\/\/.+/i.test(v);
+                      },
+                      message: (props) => `${props.value} is not a valid URL!`,
+                    },
+                  },
+                  height: {
+                    type: Number,
+                    required: true,
+                  },
+                  width: {
+                    type: Number,
+                    required: true,
+                  },
+                },
+              },
+            ],
+            required: true,
+            validate: [
+              {
+                validator: function (artists) {
+                  return artists && artists.length > 0;
+                },
+                message: "Album must have at least one artist",
+              },
+            ],
+          },
         },
       ],
       default: [],

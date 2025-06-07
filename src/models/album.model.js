@@ -82,16 +82,81 @@ const albumSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    track_ids: {
-      type: [String],
+    tracks: {
+      type: [
+        {
+          _id: {
+            type: String,
+            required: true,
+            ref: "Track",
+          },
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+          preview_url: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+          playcount: {
+            type: Number,
+            required: true,
+          },
+          duration: {
+            type: Number,
+            required: true,
+          },
+          artists: {
+            type: [
+              {
+                _id: {
+                  type: String,
+                  required: true,
+                  ref: "Artist",
+                },
+                name: {
+                  type: String,
+                  required: true,
+                  trim: true,
+                },
+                profile_image: {
+                  url: {
+                    type: String,
+                    required: true,
+                    validate: {
+                      validator: function (v) {
+                        return /^https?:\/\/.+/i.test(v);
+                      },
+                      message: (props) => `${props.value} is not a valid URL!`,
+                    },
+                  },
+                  height: {
+                    type: Number,
+                    required: true,
+                  },
+                  width: {
+                    type: Number,
+                    required: true,
+                  },
+                },
+              },
+            ],
+            required: true,
+            validate: [
+              {
+                validator: function (artists) {
+                  return artists && artists.length > 0;
+                },
+                message: "Album must have at least one artist",
+              },
+            ],
+          },
+        },
+      ],
       default: [],
       required: true,
-      ref: "Track",
-    },
-    total_tracks: {
-      type: Number,
-      required: true,
-      min: 1,
     },
     popularity: {
       type: Number,
