@@ -15,6 +15,11 @@ const trackSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    audio_url: {
+      type: String,
+      default: "",
+      required: false,
+    },
     duration: {
       type: Number,
       required: true,

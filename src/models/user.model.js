@@ -2,23 +2,43 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    fullName: {
-      type: String,
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
-    clerkId: {
+    uid: {
       type: String,
       required: true,
       unique: true,
     },
+    username: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        "Please enter a valid email",
+      ],
+    },
+    image_url: {
+      type: String,
+      required: true,
+    },
+    theme: {
+      type: String,
+      enum: ["light", "dark"],
+      default: "dark",
+    },
+    provider: {
+      type: String,
+      enum: ["firebase", "google", "github", "email"],
+      default: "firebase",
+    },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
-
-userSchema.index({ clerkId: 1 }, { unique: true });
 
 export const User = mongoose.model("User", userSchema);

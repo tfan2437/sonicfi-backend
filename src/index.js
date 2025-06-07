@@ -15,6 +15,8 @@ import albumRoutes from "./routes/album.route.js";
 import trackRoutes from "./routes/track.route.js";
 import artistRoutes from "./routes/artist.route.js";
 import suggestionRoutes from "./routes/suggestion.route.js";
+import playlistRoutes from "./routes/playlist.route.js";
+
 const app = express();
 const __dirname = path.resolve();
 
@@ -43,8 +45,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tracks", trackRoutes);
 app.use("/api/artist", artistRoutes);
 app.use("/api/album", albumRoutes);
-// refactor
 app.use("/api/suggestion", suggestionRoutes);
+app.use("/api/playlists", playlistRoutes);
 
 app.get("/", (req, res) => {
   res.send("Sonicfi API");
