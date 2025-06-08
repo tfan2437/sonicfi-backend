@@ -62,8 +62,7 @@ export const getArtistAlbums = async (req, res) => {
       albums,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch albums", error: error.message });
+    console.error("Failed to fetch albums:", error);
+    res.status(500).json({ message: "Failed to fetch albums", albums: [] });
   }
 };
