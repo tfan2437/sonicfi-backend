@@ -4,6 +4,9 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://sonic-fi.com",
   "https://www.sonic-fi.com",
+  "https://sonicfi-seven.vercel.app",
+  "https://sonicfi-seven.vercel.app/",
+  "https://www.sonicfi-seven.vercel.app",
 ];
 
 const corsOptions = {
