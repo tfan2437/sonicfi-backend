@@ -19,12 +19,14 @@ export const getArtistById = async (req, res) => {
         .json({ message: "Failed to fetch artist", error: "Artist not found" });
     }
 
-    const tracks = await Track.find({ _id: { $in: artist.top_tracks } }).sort({
-      playcount: -1,
-    });
-
     const albums = await Album.find({ _id: { $in: artist.albums } }).sort({
       release_date: -1,
+    });
+
+    console.log(artist);
+
+    const tracks = await Track.find({ _id: { $in: artist.top_tracks } }).sort({
+      playcount: -1,
     });
 
     res.status(200).json({

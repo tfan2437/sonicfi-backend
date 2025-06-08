@@ -1,7 +1,8 @@
 import { Album } from "../models/album.model.js";
+import { Artist } from "../models/artist.model.js";
 import { Track } from "../models/track.model.js";
 
-export const getAlbumById = async (req, res) => {
+export const getAlbum = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -18,7 +19,8 @@ export const getAlbumById = async (req, res) => {
         .json({ message: "Failed to fetch album", error: "Album not found" });
     }
 
-    const tracks = await Track.find({ _id: { $in: album.track_ids } }).sort({
+    const tracks = await Track.find({ _id: { $in: album.tracks } }).sort({
+      disc_number: 1,
       track_number: 1,
     });
 
@@ -40,21 +42,20 @@ export const getArtistAlbums = async (req, res) => {
     if (!id) {
       return res.status(400).json({
         message: "Failed to fetch albums",
-        error: "Artist ID is required",
+        albums: [],
       });
     }
 
-    const albums = await Album.find({
-      artists: { $elemMatch: { _id: id } },
-    }).sort({
-      release_date: -1,
-    });
-
-    if (albums.length === 0) {
+    const artist = await Artist.findById(id);
+    if (!artist) {
       return res
         .status(404)
-        .json({ message: "Failed to fetch albums", error: "Albums not found" });
+        .json({ message: "Failed to fetch albums", albums: [] });
     }
+
+    const albums = await Album.find({ _id: { $in: artist.albums } }).sort({
+      release_date: -1,
+    });
 
     res.status(200).json({
       message: "Artist albums fetched successfully",
