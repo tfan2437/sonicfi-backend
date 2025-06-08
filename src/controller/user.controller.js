@@ -27,27 +27,27 @@ export const createUser = async (req, res) => {
     if (existingUser) {
       return res.status(200).json({
         message: "User already exists",
-        success: true,
+        user: existingUser,
       });
     }
 
-    if (!uid || !username || !email || !image_url) {
+    if (!uid || !username || !email) {
       return res.status(400).json({
         message: "All fields are required",
-        success: false,
+        user: null,
       });
     }
 
-    await User.create({ uid, username, email, image_url });
+    const newUser = await User.create({ uid, username, email, image_url });
 
     res
       .status(201)
-      .json({ message: "User created successfully", success: true });
+      .json({ message: "User created successfully", user: newUser });
   } catch (error) {
     console.log("Error in createUser", error);
     res.status(500).json({
       message: "Error creating user",
-      success: false,
+      user: null,
     });
   }
 };

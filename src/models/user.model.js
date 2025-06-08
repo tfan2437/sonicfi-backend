@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema(
     },
     image_url: {
       type: String,
-      required: true,
+      default: "",
+      required: false,
     },
     theme: {
       type: String,

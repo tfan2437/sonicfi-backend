@@ -9,7 +9,6 @@ import { connectDB } from "./lib/db.js";
 import { corsOptions } from "./config/cors.config.js";
 // routes
 import userRoute from "./routes/user.route.js";
-import authRoutes from "./routes/auth.route.js";
 import albumRoutes from "./routes/album.route.js";
 import trackRoutes from "./routes/track.route.js";
 import artistRoutes from "./routes/artist.route.js";
@@ -35,7 +34,6 @@ app.use(cors(corsOptions));
 
 // Routes
 app.use("/api/users", userRoute);
-app.use("/api/auth", authRoutes);
 
 app.use("/api/artists", artistRoutes);
 app.use("/api/albums", albumRoutes);
