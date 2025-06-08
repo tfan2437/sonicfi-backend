@@ -1,7 +1,4 @@
 import express from "express";
-import fileUpload from "express-fileupload";
-import path from "path";
-import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 
 import { PORT } from "../config/env.js";
@@ -18,24 +15,12 @@ import suggestionRoutes from "./routes/suggestion.route.js";
 import playlistRoutes from "./routes/playlist.route.js";
 
 const app = express();
-const __dirname = path.resolve();
 
+app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
-  })
-);
-app.use(express.json()); // to parse req.body
-app.use(clerkMiddleware()); // this will add auth to req obj => req.auth
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: path.join(__dirname, "tmp"),
-    createParentPath: true,
-    limits: {
-      fileSize: 10 * 1024 * 1024, // 10mb max file size
-    },
   })
 );
 
